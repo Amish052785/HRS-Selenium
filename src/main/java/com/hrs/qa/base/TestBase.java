@@ -27,7 +27,8 @@ public class TestBase {
 		FileInputStream ip;
 		try 
 		{
-			ip = new FileInputStream("D:\\Selenium_Programming\\HRS\\src\\main\\java\\com\\hrs\\qa\\config\\config.properties");
+			//ip = new FileInputStream("D:\\Selenium_Programming\\HRS\\src\\main\\java\\com\\hrs\\qa\\config\\config.properties");
+			ip = new FileInputStream("./src/main/java/com/hrs/qa/config/config.properties");
 			prop.load(ip);
 		} 
 		catch (FileNotFoundException e) 
