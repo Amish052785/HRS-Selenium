@@ -59,6 +59,18 @@ public class LoginPageTest extends TestBase{
 		Assert.assertTrue(flag);
 	}
 
+	@Test(priority=7)
+	public void ForgotPasswordLinkClickTest() {
+		String resetPwd_message = loginpage.validateForgotPasswordLinkClick();
+		Assert.assertEquals(resetPwd_message, "Reset password request successfully submitted.");
+	}
+
+	@Test(priority=8)
+	public void HealthRecoverySolutionLinkClickTest() {
+		String child_window_title = loginpage.validateHealthRecoverySolutionLinkClick();
+		Assert.assertEquals(child_window_title, "Remote Patient Monitoring & Telehealth | Health Recovery Solutions");
+	}
+	
 	@AfterMethod
 	public void tearDown() {
 		driver.quit();

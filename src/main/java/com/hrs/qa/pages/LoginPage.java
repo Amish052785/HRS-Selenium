@@ -1,6 +1,9 @@
 package com.hrs.qa.pages;
 
+import java.beans.PropertyChangeSupport;
 import java.time.Duration;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -26,6 +29,12 @@ public class LoginPage extends TestBase{
 		
 	@FindBy(xpath="//a[contains(text(),'Forgot Password?')]")
 	WebElement forgotpassword_link;
+	
+	@FindBy(id="resetPassword_username")
+	WebElement resetPassword_username;
+	
+	@FindBy(xpath="//button//span[contains(text(),'Submit')]")
+	WebElement Submit_button;
 	
 	@FindBy(xpath="//button[@id='loginSubmitButton']")
 	WebElement Signin_button;
@@ -69,13 +78,41 @@ public class LoginPage extends TestBase{
 		
 		//return error message text
 		WebElement err_msg =  driver.findElement(By.xpath("//div//span[@class='ng-scope']"));
-
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		wait.until(ExpectedConditions.visibilityOf(err_msg));
 
 		return err_msg.getText();
 	}
 
+	public String validateForgotPasswordLinkClick() {
+		forgotpassword_link.click();
+		resetPassword_username.sendKeys(prop.getProperty("username"));
+		Submit_button.click();
+		
+		//reset password message
+		WebElement resetPassword_msg = driver.findElement(By.xpath("//div//span[@class='ng-scope']"));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.visibilityOf(resetPassword_msg));
+
+		return resetPassword_msg.getText();
+	}
 	
-	
+	public String validateHealthRecoverySolutionLinkClick() {
+		healthrecoverysolution_link.click();
+		
+		String parentWindow = driver.getWindowHandle();
+		Set<String> allWindow = driver.getWindowHandles();
+		String childWindow="";
+		
+		for(String child:allWindow) 
+		{
+			if(!parentWindow.equalsIgnoreCase(child))
+			{
+				driver.switchTo().window(child);
+				String childWindowTitle = driver.getTitle();
+				childWindow = childWindowTitle;
+			}
+		}
+		return childWindow;
+	}
 }
